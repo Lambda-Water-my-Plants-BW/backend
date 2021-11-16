@@ -25,10 +25,15 @@ async function addUser(newUser) {
     return user;
 
 }
+
+function update(user_id, changes) {
+    return db('users').where('user_id', user_id).first().update(changes)
+  }
 module.exports = {
     get,
     getBy,
     getById,
     addUser,
-    getUserPlants
+    getUserPlants,
+    update
 }

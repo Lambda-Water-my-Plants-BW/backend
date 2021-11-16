@@ -2,6 +2,8 @@ const router = require("express").Router();
 const Users = require("./users-model.js");
 const jwt = require("jsonwebtoken");
 const { checkUserExists } = require("./users-middleware");
+const bcrypt = require('bcryptjs');
+
 
 router.get("/plants", checkUserExists, (req, res, next) => {
     const token = req.headers.authorization;
@@ -26,7 +28,13 @@ router.get("/plants", checkUserExists, (req, res, next) => {
   router.put("/", checkUserExists, (req, res, next) => {
     const token = req.headers.authorization;
     const id = jwt.decode(token);
-    Users.update(id.subject, req.body)
+
+    const user = req.body;
+    const rounds = process.env.BCRYPT_ROUNDS || 8;
+    const hash = bcrypt.hashSync(user.password, rounds);
+    user.password = hash;
+
+    Users.update(id.subject, user)
       .then(() => {
         res.status(200).json({ message: "User info updated" });
       })
