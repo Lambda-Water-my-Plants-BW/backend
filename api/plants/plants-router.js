@@ -4,14 +4,14 @@ const { noMissingInformation, checkUserIdExists } = require('./plants-middleware
 
 
 router.get("/", (req, res, next) => {
-    Plants.get()
+    Plants.getPlants()
         .then(plantsData => {
             res.status(200).json(plantsData)
         })
         .catch(next);
 })
 
-router.get("/:id", (req, res, next) => {
+router.getById("/:id", (req, res, next) => {
     const { id } = req.params;
     Plants.getById(id)
         .then(plant => {
