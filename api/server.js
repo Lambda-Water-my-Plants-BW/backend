@@ -14,7 +14,7 @@ server.use(cors())
 
 server.use('/api/auth', authRouter);
 server.use('/api/users', restrict, userRouter);
-server.use('/api/plants', restrict, plantsRouter);
+server.use('/api/plants', plantsRouter);
 
 server.get("/", (req, res) => {
   res.json({ api: "up" });
