@@ -11,7 +11,7 @@ router.get("/", (req, res, next) => {
         .catch(next);
 })
 
-router.getById("/:id", (req, res, next) => {
+router.get("/:id", (req, res, next) => {
     const { id } = req.params;
     Plants.getById(id)
         .then(plant => {
